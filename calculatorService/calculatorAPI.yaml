@@ -1,0 +1,219 @@
+openapi: 3.0.3
+info:
+  title: My Calculator Project
+  description: |-
+    This is a sample project for students. The project goal is to show students how to create an API.
+  contact:
+    email: peregudova@mirea.ru
+  version: 1.0.1
+
+
+paths:
+  /add:
+    post:
+      tags:
+        - Addition operation
+      summary: Сalculate the sum of the numbers
+      description: Calculate the sum of the numbers
+      requestBody:
+        description: Calculate sum of two integer numbers
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IntegerOperands'
+        required: true
+        
+      responses:
+        '200':
+          description: Successful summary operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SumOfIntegerNumbers'
+        '406':
+          description: Unvalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '400':
+          description: Calculation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+          
+          
+  /sub:
+    post:
+      tags:
+        - substraction operation
+      summary: Calculate difference of two integer numbers
+      description: Calculate difference of two integer numbers
+      requestBody:
+        description: Calculate difference of two integer numbers
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IntegerOperands'
+        required: true
+        
+      responses:
+        '200':
+          description: Successful substraction operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiffOfIntegerNumbers'
+        '406':
+          description: Unvalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '400':
+          description: Calculation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+  /mul:
+    post:
+      tags:
+        - multiplication operation
+      summary: Calculate multiplication of two integer numbers
+      description: Calculate multiplication of two integer numbers
+      requestBody:
+        description: Calculate multiplication of two integer numbers
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IntegerOperands'
+        required: true
+        
+      responses:
+        '200':
+          description: Successful multiplication operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MulOfIntegerNumbers'
+        '406':
+          description: Unvalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '400':
+          description: Calculation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+  /div:
+      post:
+        tags:
+          - division operation
+        summary: Calculate division of two integer numbers
+        description: Calculate division of two integer numbers
+        requestBody:
+          description: Calculate division of two integer numbers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegerOperands'
+          required: true
+          
+        responses:
+          '200':
+            description: Successful division operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/DivOfIntegerNumbers'
+          '406':
+            description: Unvalid parameters
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorMessage'
+          '400':
+            description: Calculation error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorMessage'
+      
+        
+
+ 
+components:
+  schemas:
+    IntegerNumber:
+      type: object
+      required:
+        - value
+      properties:
+        value:
+          type: integer
+          format: int64
+          example: 10
+    
+    IntegerOperands:
+      type: object
+      required:
+        - firstOperand
+        - secondOperand
+      properties:
+        firstOperand:
+          $ref: '#/components/schemas/IntegerNumber'
+        secondOperand:
+          $ref: '#/components/schemas/IntegerNumber'
+          
+    SumOfIntegerNumbers:
+      type: object
+      required:
+        - sum
+      properties:
+        sum:
+          $ref: '#/components/schemas/IntegerNumber'
+          
+    DiffOfIntegerNumbers:
+      type: object
+      required:
+        - difference
+      properties:
+        difference:
+          $ref: '#/components/schemas/IntegerNumber'
+          
+    MulOfIntegerNumbers:
+      type: object
+      required:
+        - product
+      properties:
+        product:
+          $ref: '#/components/schemas/IntegerNumber'
+          
+    DivOfIntegerNumbers:
+      type: object
+      required:
+        - quotient
+        - remainder
+      properties:
+        quotient:
+          $ref: '#/components/schemas/IntegerNumber'
+        remainder:
+          $ref: '#/components/schemas/IntegerNumber'
+    
+
+    ErrorMessage:
+      type: object
+      properties:
+        type:
+          type: string
+          description: type of error
+          enum:
+            - input data error
+            - calculation error
+        message:
+          type: string
